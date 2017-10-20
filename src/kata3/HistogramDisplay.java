@@ -11,8 +11,11 @@ import org.jfree.ui.ApplicationFrame;
 
 public class HistogramDisplay extends ApplicationFrame{
     
-    public HistogramDisplay(){
+    private final Histogram<String> histogram;
+    
+    public HistogramDisplay(Histogram<String> histogram){
         super("Histograma de emails");
+        this.histogram = histogram;
         setContentPane(createPanel());
         pack(); //para que coja la ventana adecuada
     }
@@ -42,11 +45,10 @@ public class HistogramDisplay extends ApplicationFrame{
     
     private DefaultCategoryDataset createDataset(){
         DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
-        dataSet.addValue(15, "", "ulpgc.es");   //si metemos un valor en le 2º cambia la gráfica
-        dataSet.addValue(1, "", "hotmail.com");
-        dataSet.addValue(10, "", "ull.es");
-        dataSet.addValue(7, "", "gmail.com");//para copiar hacia abajo es control+May+flechaAbajo
+        for (String key : histogram.keySet()) {
+            dataSet.addValue(histogram.get(key), "", key);
+            
+        }
         return dataSet;
     }
-    
 }
